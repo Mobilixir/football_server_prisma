@@ -3,7 +3,7 @@ import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 import { jwt_token } from '../utils/config';
 
-const excludedPaths = ['/api/v1/login', '/api/v1/registration'];
+const excludedPaths = ['/api/v1/login', '/api/v1/registration', '/test'];
 
 export interface AuthenticatedRequest extends Request {
   userId?: string;

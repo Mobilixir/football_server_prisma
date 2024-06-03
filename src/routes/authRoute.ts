@@ -4,7 +4,7 @@ import authController from '../controller/AuthController';
 const AllRouter = Router();
 const auth = new authController();
 
-AllRouter.route('/').get((req: Request, res: Response) => {
+AllRouter.route('/test').get((req: Request, res: Response) => {
   return res.status(200).send({
     message: 'GET request successfulll!!!!',
   });

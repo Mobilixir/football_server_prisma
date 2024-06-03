@@ -48,7 +48,7 @@ const createJwtAuthToken = (user: User) => {
 
 const checkUserRole = async (user_id: string, res: Response, role: eUserType) => {
   try {
-    const user = await prismaClient.user.findFirst({ where: { id: user_id } });
+    const user = await prismaClient.user.findFirstOrThrow({ where: { id: user_id } });
     if (user && user.role === role) {
       return user;
     }

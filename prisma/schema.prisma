@@ -22,11 +22,16 @@ enum eUserType {
 
 model User {
    id String @id @default(uuid()) @db.Uuid
-   first_name  String
+   first_name String
    last_name String?
    user_name String @unique
    role eUserType @default(USER)
    email String @unique
    mobile_number String @unique
    hash_password String
+}
+
+model Team {
+  id String @id @default(uuid()) @db.Uuid
+  name String
 }
