@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
-import { secret_key } from '../utils/config';
+import { jwt_token } from '../utils/config';
 
 const excludedPaths = ['/api/v1/login', '/api/v1/registration'];
 
@@ -20,7 +20,7 @@ const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextF
   }
   const token = authorization.split(' ')[1];
 
-  jwt.verify(token, secret_key, (err: jwt.JsonWebTokenError | TokenExpiredError | null) => {
+  jwt.verify(token, jwt_token, (err: jwt.JsonWebTokenError | TokenExpiredError | null) => {
     if (err) {
       if (err instanceof TokenExpiredError) {
         return res.status(401).json({ message: 'Token Expired' });

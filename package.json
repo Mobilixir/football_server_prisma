@@ -2,24 +2,21 @@
   "author": "Rushikesh Pandit",
   "dependencies": {
     "@eslint/js": "9.3.0",
-    "@prisma/client": "^5.14.0",
+    "@prisma/client": "5.14.0",
     "@types/memory-cache": "0.2.5",
     "@types/node": "20.12.12",
     "bcryptjs": "2.4.3",
     "body-parser": "1.20.2",
     "cors": "2.8.5",
-    "db-migrate": "0.11.14",
-    "db-migrate-pg": "1.5.2",
     "dotenv": "16.4.5",
     "express": "4.19.2",
     "jsonwebtoken": "9.0.2",
     "lodash": "4.17.21",
-    "pg": "8.11.5",
-    "pg-hstore": "2.3.4",
     "prettier": "3.2.5",
     "typescript": "5.4.5",
     "typescript-eslint": "7.9.0",
-    "uuid": "9.0.1"
+    "uuid": "9.0.1",
+    "validator": "13.12.0"
   },
   "description": "A Node JS app for foot ball match to manage tournaments",
   "devDependencies": {
@@ -32,6 +29,7 @@
     "@types/lodash": "4.17.4",
     "@types/node": "20.12.12",
     "@types/uuid": "9.0.8",
+    "@types/validator": "13.11.10",
     "husky": "9.0.11",
     "nodemon": "3.1.0",
     "prisma": "5.14.0",
@@ -57,7 +55,9 @@
     "format": "eslint src/**/*.ts --fix",
     "lint": "eslint src/**/*.ts",
     "start": "npm run build && nodemon ./src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate": "npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
+    "db:push": "npx prisma db push"
   },
   "version": "1.0.0"
 }
