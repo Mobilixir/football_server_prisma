@@ -84,12 +84,53 @@ class UserController {
     }
   }
 
+  public async addUsersToTeam(req: Request, res: Response) {
+    try {
+      const user_id = (await Helper.getUserFromToken(req, res)).toString();
+      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      if (response) {
+        const { teamId, ids } = req.body;
+
+        await prismaClient.$transaction(async () => {
+          ids.map(async (id: string) => {
+            const users = await prismaClient.user.findMany({ where: { id: id, role: eUserType.PLAYER } });
+            if (users.length > 0) {
+              users.map(async (user) => {
+                await prismaClient.user.update({
+                  data: { teamId: teamId },
+                  where: { id: user.id },
+                });
+              });
+              return res.status(200).send({
+                status: true,
+                message: 'Players added to the team successfully.',
+                data: {},
+              });
+            } else {
+              return res.status(200).send({
+                status: false,
+                message: 'Player does not exists.',
+                data: {},
+              });
+            }
+          });
+        });
+      } else {
+        throw response;
+      }
+    } catch (error: unknown) {
+      return Helper.handleError(error, res);
+    }
+  }
+
   public async getPlayersByTeamId(req: Request, res: Response) {
     try {
-      const { id } = req.body;
+      const teamId = req.params.teamId;
 
-      const players = await prismaClient.user.findMany({ where: { role: eUserType.PLAYER, teamId: id } });
-      console.log('🚀 ~ UserController ~ getPlayersByTeamId ~ players:', players);
+      const players = await prismaClient.user.findMany({
+        where: { role: eUserType.PLAYER, teamId: teamId },
+        select: Helper.prismaExclude('User', ['hash_password']),
+      });
       if (!Helper.isEmpty(players)) {
         return res.status(200).send({
           status: true,
