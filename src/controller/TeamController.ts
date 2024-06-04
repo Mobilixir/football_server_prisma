@@ -125,20 +125,27 @@ class TeamController {
   public async deleteTeamById(req: Request, res: Response) {
     try {
       const teamId = req.params.teamId;
-      const team = await prismaClient.team.findFirst({ where: { id: teamId } });
-      if (team) {
-        await prismaClient.team.delete({ where: { id: teamId } });
-        return res.status(200).send({
-          status: true,
-          message: 'Team deleted successfully.',
-          data: {},
-        });
+      const user_id = (await Helper.getUserFromToken(req, res)).toString();
+      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+
+      if (response) {
+        const team = await prismaClient.team.findFirst({ where: { id: teamId } });
+        if (team) {
+          await prismaClient.team.delete({ where: { id: teamId } });
+          return res.status(200).send({
+            status: true,
+            message: 'Team deleted successfully.',
+            data: {},
+          });
+        } else {
+          return res.status(200).send({
+            status: false,
+            message: 'No team found',
+            data: {},
+          });
+        }
       } else {
-        return res.status(200).send({
-          status: false,
-          message: 'No team found',
-          data: {},
-        });
+        throw response;
       }
     } catch (error: unknown) {
       return Helper.handleError(error, res);
