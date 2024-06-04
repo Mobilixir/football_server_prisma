@@ -3,7 +3,7 @@ import Validator from 'validator';
 import Helper from '../../../utils/helper';
 import ErrorObject from '../../../interface/error';
 import iRegistrationData from '../../../interface/registration';
-import UserType from '../../../enum/userType';
+import { eUserType } from '@prisma/client';
 
 const isEmpty = Helper.isEmpty;
 
@@ -13,7 +13,7 @@ const validateRegister = (data: iRegistrationData) => {
   data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
   data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
   data.user_name = !isEmpty(data.user_name) ? data.user_name : '';
-  data.role = !isEmpty(data.role) ? data.role : UserType.USER;
+  data.role = !isEmpty(data.role) ? data.role : eUserType.USER;
   data.email = !isEmpty(data.email) ? data.email : '';
   data.mobile_number = !isEmpty(data.mobile_number) ? data.mobile_number : 0;
   data.password = !isEmpty(data.password) ? data.password : '';

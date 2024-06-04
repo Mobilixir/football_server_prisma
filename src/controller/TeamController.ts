@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import validateTeam from './validations/team/teamValidation';
 import Helper from '../utils/helper';
-import eUserType from '../enum/userType';
 import prismaClient from '../utils/database';
+import { eUserType } from '@prisma/client';
 
 class TeamController {
   public async createTeam(req: Request, res: Response) {

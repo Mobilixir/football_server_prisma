@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import _ from 'lodash';
 
-import eUserType from '../enum/userType';
 import Helper from '../utils/helper';
 import prismaClient from '../utils/database';
+import { eUserType } from '@prisma/client';
 
 class UserController {
   public async getUserRoleList(req: Request, res: Response) {
