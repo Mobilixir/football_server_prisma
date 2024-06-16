@@ -1,11 +1,10 @@
 import Jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import crypto from 'crypto';
-import { Prisma } from '@prisma/client';
+import { eUserType, Prisma } from '@prisma/client';
 
 import prismaClient from './database';
 import { jwt_token, validity, encryption_algorithm, encryption_key, iv_length } from '../utils/config';
-import eUserType from '../enum/userType';
 import iJwtPayload from '../interface/jwt_payload';
 import { User } from '@prisma/client';
 

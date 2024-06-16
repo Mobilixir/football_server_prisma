@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import _ from 'lodash';
 
-import eUserType from '../enum/userType';
 import Helper from '../utils/helper';
 import prismaClient from '../utils/database';
+import { eUserType } from '@prisma/client';
 
 class UserController {
   public async getUserRoleList(req: Request, res: Response) {
@@ -33,11 +32,15 @@ class UserController {
         const { role, id } = req.body;
         const user = await prismaClient.user.findUnique({ where: { id: id } });
         if (user) {
-          const updated_user = await prismaClient.user.update({ data: { role: role }, where: { id: id } });
+          const updated_user = await prismaClient.user.update({
+            data: { role: role },
+            where: { id: id },
+            select: Helper.prismaExclude('User', ['hash_password']),
+          });
           return res.status(200).send({
             status: true,
             message: 'User role updated successfully.',
-            data: { user: _.pick(updated_user, ['first_name', 'last_name', 'role', 'email', 'mobile_number', 'id']) },
+            data: { user: updated_user },
           });
         } else {
           return res.status(200).send({
@@ -62,12 +65,16 @@ class UserController {
         const { teamId, id } = req.body;
         const user = await prismaClient.user.findUnique({ where: { id: id, role: eUserType.PLAYER } });
         if (user) {
-          const updated_user = await prismaClient.user.update({ data: { teamId: teamId }, where: { id: id } });
+          const updated_user = await prismaClient.user.update({
+            data: { teamId: teamId },
+            where: { id: id },
+            select: Helper.prismaExclude('User', ['hash_password']),
+          });
 
           return res.status(200).send({
             status: true,
             message: 'User team updated successfully.',
-            data: { user: _.pick(updated_user, ['first_name', 'last_name', 'role', 'email', 'mobile_number', 'id']) },
+            data: { user: updated_user },
           });
         } else {
           return res.status(200).send({

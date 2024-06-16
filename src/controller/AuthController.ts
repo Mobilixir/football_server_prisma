@@ -83,13 +83,16 @@ class AuthController {
   public async me(req: Request, res: Response) {
     try {
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const user = await prismaClient.user.findFirst({ where: { id: user_id } });
+      const user = await prismaClient.user.findFirst({
+        where: { id: user_id },
+        select: Helper.prismaExclude('User', ['hash_password']),
+      });
 
       if (user) {
         return res.status(200).send({
           status: true,
           message: 'Profile fetched successfully.',
-          data: _.pick(user, ['first_name', 'last_name', 'role', 'email', 'mobile_number', 'id']),
+          data: user,
         });
       } else {
         return res.status(404).send({
