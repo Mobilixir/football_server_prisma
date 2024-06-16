@@ -4,10 +4,12 @@ import MatchController from '../controller/MatchController';
 const AllRouter = Router();
 const match = new MatchController();
 
-AllRouter.route('/api/v1/getuserrolelist').get(user.getUserRoleList);
-AllRouter.route('/api/v1/updateuserrole').put(user.updateUserRole);
-AllRouter.route('/api/v1/updateuserteam').put(user.updateUserTeam);
-AllRouter.route('/api/v1/addusertoteam').post(user.addUsersToTeam);
-AllRouter.route('/api/v1/getplayerbyteam/:teamId').get(user.getPlayersByTeamId);
+AllRouter.route('/api/v1/creatematch').get(match.createMatch);
+AllRouter.route('/api/v1/updatematch').put(match.updateMatch);
+AllRouter.route('/api/v1/deletematch').put(match.deleteMatch);
+AllRouter.route('/api/v1/getallmatches').get(match.getAllMatches);
+AllRouter.route('/api/v1/getmatch/:matchId').get(match.getMatchById);
+AllRouter.route('/api/v1/getmatch/team/:teamId').get(match.getMatchesByTeamId);
+AllRouter.route('/api/v1/getmatchhistory/:teamId').get(match.getMatchesHistoryByTeamId);
 
 export default AllRouter;
