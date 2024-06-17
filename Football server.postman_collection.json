@@ -658,6 +658,198 @@
 			]
 		},
 		{
+			"name": "Match Stat",
+			"item": [
+				{
+					"name": "create match stat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"2b09398f-3c49-40fc-a3da-0a1744b590c4\",\n    \"matchId\": \"9ff93f3f-3dec-4bf8-89ff-3e6d05e08638\",\n    \"playerId\": \"c864c424-a5fe-4d96-abc0-b34d4cbd1b9c\",\n    \"goals\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/creatematchstat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"creatematchstat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update match stat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"3f69695f-ecb4-41c1-b9d7-b330af6350ab\",\n    \"teamId\": \"2b09398f-3c49-40fc-a3da-0a1744b590c4\",\n    \"matchId\": \"9ff93f3f-3dec-4bf8-89ff-3e6d05e08638\",\n    \"playerId\": \"c864c424-a5fe-4d96-abc0-b34d4cbd1b9c\",\n    \"goals\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updatematchstat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updatematchstat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete match stat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deletematchstat/3f69695f-ecb4-41c1-b9d7-b330af6350ab",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deletematchstat",
+								"3f69695f-ecb4-41c1-b9d7-b330af6350ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match stat by match id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatchstat/match/9ff93f3f-3dec-4bf8-89ff-3e6d05e08638",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatchstat",
+								"match",
+								"9ff93f3f-3dec-4bf8-89ff-3e6d05e08638"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match stat by team id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatchstat/team/ad84613e-6217-418f-965e-9a68b460763e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatchstat",
+								"team",
+								"ad84613e-6217-418f-965e-9a68b460763e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match stat by team id Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatchstat/player/0bd09005-3eb4-4f08-bcf1-9ab755e95ea5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatchstat",
+								"player",
+								"0bd09005-3eb4-4f08-bcf1-9ab755e95ea5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Test",
 			"request": {
 				"auth": {
