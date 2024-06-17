@@ -28,30 +28,30 @@ enum eMatchStatusType {
 }
 
 model User {
-  id            String     @id @default(uuid()) @db.Uuid
+  id            String      @id @default(uuid()) @db.Uuid
   first_name    String
   last_name     String?
-  user_name     String     @unique
-  role          eUserType  @default(USER)
-  email         String     @unique
-  mobile_number String     @unique
+  user_name     String      @unique
+  role          eUserType   @default(USER)
+  email         String      @unique
+  mobile_number String      @unique
   hash_password String
-  team          Team?      @relation(fields: [teamId], references: [id])
-  teamId        String?    @unique @db.Uuid
-  MatchStat     MatchStat?
+  team          Team?       @relation(fields: [teamId], references: [id])
+  teamId        String?     @unique @db.Uuid
+  MatchStat     MatchStat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Team {
-  id        String     @id @default(uuid()) @db.Uuid
+  id        String      @id @default(uuid()) @db.Uuid
   name      String
   User      User[]
-  Match1    Match[]    @relation("match_team1")
-  Match2    Match[]    @relation("match_team2")
-  Winner    Match[]    @relation("winner")
-  MatchStat MatchStat?
+  Match1    Match[]     @relation("match_team1")
+  Match2    Match[]     @relation("match_team2")
+  Winner    Match[]     @relation("winner")
+  MatchStat MatchStat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,7 +69,7 @@ model Match {
   winner      Team?            @relation("winner", fields: [winnerId], references: [id])
   winnerId    String?          @db.Uuid
   status      eMatchStatusType @default(SCHEDULED)
-  MatchStat   MatchStat?
+  MatchStat   MatchStat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,11 +78,11 @@ model Match {
 model MatchStat {
   id       String @id @default(uuid()) @db.Uuid
   team     Team   @relation(fields: [teamId], references: [id])
-  teamId   String @unique @db.Uuid
+  teamId   String @db.Uuid
   match    Match  @relation(fields: [matchId], references: [id])
-  matchId  String @unique @db.Uuid
+  matchId  String @db.Uuid
   player   User   @relation(fields: [playerId], references: [id])
-  playerId String @unique @db.Uuid
+  playerId String @db.Uuid
   goals    Int
 
   createdAt DateTime @default(now())
