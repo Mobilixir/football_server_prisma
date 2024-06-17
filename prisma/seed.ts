@@ -21,18 +21,6 @@ async function main() {
     },
   });
 
-  const delhi_team = await prisma.team.create({
-    data: {
-      name: 'Delhi',
-    },
-  });
-
-  const kochi_team = await prisma.team.create({
-    data: {
-      name: 'Kochi',
-    },
-  });
-
   const mumbai_team = await prisma.team.create({
     data: {
       name: 'Mumbai',
@@ -113,20 +101,20 @@ async function main() {
 
   const match_two = await prisma.match.create({
     data: {
-      team1Id: kochi_team.id,
-      team2Id: delhi_team.id,
+      team1Id: pune_team.id,
+      team2Id: bangalore_team.id,
       schedule: new Date('2024-06-25 10:52:51.330'),
     },
   });
 
   const match_three = await prisma.match.create({
     data: {
-      team1Id: kochi_team.id,
+      team1Id: mumbai_team.id,
       team2Id: bangalore_team.id,
       schedule: new Date('2024-06-10 10:52:51.330'),
       team1_score: 3,
       team2_score: 2,
-      winnerId: kochi_team.id,
+      winnerId: mumbai_team.id,
       status: eMatchStatusType.COMPLETED,
     },
   });
@@ -134,9 +122,54 @@ async function main() {
   const match_four = await prisma.match.create({
     data: {
       team1Id: bangalore_team.id,
-      team2Id: delhi_team.id,
+      team2Id: pune_team.id,
       schedule: new Date('2024-06-22 10:52:51.330'),
       status: eMatchStatusType.CANCELLED,
+    },
+  });
+
+  const matchstat_one = await prisma.matchStat.create({
+    data: {
+      teamId: mumbai_team.id,
+      matchId: match_three.id,
+      playerId: player_three.id,
+      goals: 1,
+    },
+  });
+
+  const matchstat_two = await prisma.matchStat.create({
+    data: {
+      teamId: mumbai_team.id,
+      matchId: match_three.id,
+      playerId: player_three.id,
+      goals: 1,
+    },
+  });
+
+  const matchstat_three = await prisma.matchStat.create({
+    data: {
+      teamId: bangalore_team.id,
+      matchId: match_three.id,
+      playerId: player_two.id,
+      goals: 1,
+    },
+  });
+
+  const matchstat_four = await prisma.matchStat.create({
+    data: {
+      teamId: mumbai_team.id,
+      matchId: match_three.id,
+      playerId: player_three.id,
+      goals: 1,
+    },
+  });
+
+  const matchstat_five = await prisma.matchStat.create({
+    data: {
+      teamId: bangalore_team.id,
+      matchId: match_three.id,
+      playerId: player_two.id,
+      goals: 1,
     },
   });
 }
