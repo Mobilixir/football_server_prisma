@@ -1,0 +1,683 @@
+{
+	"info": {
+		"_postman_id": "16a50b0f-3f60-4000-a203-9d7512f872e9",
+		"name": "Football server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27526041",
+		"_collection_link": "https://bold-satellite-992761.postman.co/workspace/My-Workspace~71086a14-a1b3-4d2b-87c8-b3ea327da377/collection/27526041-16a50b0f-3f60-4000-a203-9d7512f872e9?action=share&source=collection_link&creator=27526041"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"user\",\n    \"last_name\": \"mobilixir\",\n    \"user_name\": \"user\",\n    \"role\": \"USER\",\n    \"email\": \"user@mobilixir.in\",\n    \"mobile_number\": \"1234567890\",\n    \"password\": \"User@7588\",\n    \"confirm_password\": \"User@7588\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/registration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"console.log(jsonData)",
+									"",
+									"pm.environment.set(\"token\", jsonData.data.token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@mobilixir.in\",\n    \"password\": \"Admin@7588\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team",
+			"item": [
+				{
+					"name": "create team",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \"Bangalore\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/createteam",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"createteam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update team",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"id\": \"87362611-c3f2-4a70-9a93-cbf06c1bd85c\",\n   \"name\": \"Pune\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updateteam",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateteam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all teams",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teams",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get team by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teams/184c1602-41ad-4012-817b-5473a0f4a241",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teams",
+								"184c1602-41ad-4012-817b-5473a0f4a241"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete team by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/teams/184c1602-41ad-4012-817b-5473a0f4a241",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teams",
+								"184c1602-41ad-4012-817b-5473a0f4a241"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Common",
+			"item": [
+				{
+					"name": "get user role list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getuserrolelist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getuserrolelist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "update user role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"248e1ef3-1487-4cd3-a681-7fd7e5404de5\",\n    \"role\": \"PLAYER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updateuserrole",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateuserrole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user team",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"3bdec9c3-b2c6-48a5-be00-6200d22d9bbb\",\n    \"id\": \"248e1ef3-1487-4cd3-a681-7fd7e5404de5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updateuserteam",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updateuserteam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add users to team",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"3bdec9c3-b2c6-48a5-be00-6200d22d9bbb\",\n    \"ids\": [\n        \"248e1ef3-1487-4cd3-a681-7fd7e5404de5\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/addusertoteam",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"addusertoteam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get player list by team id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getplayerbyteam/3bdec9c3-b2c6-48a5-be00-6200d22d9bbb",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getplayerbyteam",
+								"3bdec9c3-b2c6-48a5-be00-6200d22d9bbb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Match",
+			"item": [
+				{
+					"name": "create match",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team1Id\": \"4b51435b-7e2b-4a2a-b07b-5f353841ebae\",\n    \"team2Id\": \"b2dea2a9-53c1-4d60-abff-c6289b571613\",\n    \"schedule\": \"2024-07-12T13:05:59.103Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/creatematch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"creatematch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update match",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"adf67e35-2f56-466c-b24a-aa4d1933f00e\",\n    \"team1Id\": \"4b51435b-7e2b-4a2a-b07b-5f353841ebae\",\n    \"team2Id\": \"b861184a-9ae9-406d-b713-c642b7011d65\",\n    \"schedule\": \"2024-07-12T13:05:59.103Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/updatematch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"updatematch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete match",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/deletematch/adf67e35-2f56-466c-b24a-aa4d1933f00e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"deletematch",
+								"adf67e35-2f56-466c-b24a-aa4d1933f00e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all matches",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getallmatches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getallmatches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match by match id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatch/f65c75b9-2ae9-4384-a110-fcf96679fce9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatch",
+								"f65c75b9-2ae9-4384-a110-fcf96679fce9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match by team id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatch/team/2761c754-00f9-4a48-b056-9d77def14cd4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatch",
+								"team",
+								"2761c754-00f9-4a48-b056-9d77def14cd4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get match history by team id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/getmatchhistory/b2dea2a9-53c1-4d60-abff-c6289b571613",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"getmatchhistory",
+								"b2dea2a9-53c1-4d60-abff-c6289b571613"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
