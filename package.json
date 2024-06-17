@@ -54,10 +54,11 @@
     "build": "npx tsc",
     "format": "eslint src/**/*.ts --fix",
     "lint": "eslint src/**/*.ts",
-    "start": "npm run build && npx prisma format && nodemon ./src/index.ts",
+    "start": "npm run build && npx prisma format && npx prisma db push --force-reset && npm run seed && nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:migrate": "npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
-    "db:push": "npx prisma db push"
+    "db:push": "npx prisma db push",
+    "seed": "ts-node prisma/seed.ts"
   },
   "version": "1.0.0"
 }
