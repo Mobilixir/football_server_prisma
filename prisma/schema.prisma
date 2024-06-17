@@ -48,9 +48,9 @@ model Team {
   id        String     @id @default(uuid()) @db.Uuid
   name      String
   User      User[]
-  Match1    Match?     @relation("match_team1")
-  Match2    Match?     @relation("match_team2")
-  Winner    Match?     @relation("winner")
+  Match1    Match[]    @relation("match_team1")
+  Match2    Match[]    @relation("match_team2")
+  Winner    Match[]    @relation("winner")
   MatchStat MatchStat?
 
   createdAt DateTime @default(now())
@@ -60,14 +60,14 @@ model Team {
 model Match {
   id          String           @id @default(uuid()) @db.Uuid
   team1       Team             @relation("match_team1", fields: [team1Id], references: [id])
-  team1Id     String           @unique @db.Uuid
+  team1Id     String           @db.Uuid
   team2       Team             @relation("match_team2", fields: [team2Id], references: [id])
-  team2Id     String           @unique @db.Uuid
+  team2Id     String           @db.Uuid
   schedule    DateTime?
   team1_score Int              @default(0)
   team2_score Int              @default(0)
   winner      Team?            @relation("winner", fields: [winnerId], references: [id])
-  winnerId    String?          @unique @db.Uuid
+  winnerId    String?          @db.Uuid
   status      eMatchStatusType @default(SCHEDULED)
   MatchStat   MatchStat?
 
