@@ -26,7 +26,7 @@ class UserController {
   public async updateUserRole(req: Request, res: Response) {
     try {
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
 
       if (response) {
         const { role, id } = req.body;
@@ -60,10 +60,13 @@ class UserController {
   public async updateUserTeam(req: Request, res: Response) {
     try {
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
       if (response) {
         const { teamId, id } = req.body;
-        const user = await prismaClient.user.findUnique({ where: { id: id, role: eUserType.PLAYER } });
+        const user = await prismaClient.user.findUnique({
+          where: { id: id, role: eUserType.PLAYER },
+          include: { team: true },
+        });
         if (user) {
           const updated_user = await prismaClient.user.update({
             data: { teamId: teamId },
@@ -94,7 +97,7 @@ class UserController {
   public async addUsersToTeam(req: Request, res: Response) {
     try {
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
       if (response) {
         const { teamId, ids } = req.body;
 

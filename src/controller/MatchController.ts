@@ -16,7 +16,7 @@ class MatchController {
       }
 
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
       if (response) {
         const match = await prismaClient.match.create({ data: { ...body } });
         return res.status(200).send({
@@ -42,9 +42,13 @@ class MatchController {
       }
 
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
       if (response) {
-        const match = await prismaClient.match.update({ data: { ...body }, where: { id: body.id } });
+        const match = await prismaClient.match.update({
+          data: { ...body },
+          where: { id: body.id },
+          include: { team1: true, team2: true, winner: true },
+        });
         return res.status(200).send({
           status: true,
           message: 'Match schedule updated successfully.',
@@ -63,7 +67,7 @@ class MatchController {
       const matchId = req.params.matchId;
 
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
       if (response) {
         const match = await prismaClient.match.delete({ where: { id: matchId } });
         return res.status(200).send({
@@ -81,7 +85,10 @@ class MatchController {
 
   public async getAllMatches(req: Request, res: Response) {
     try {
-      const matches = await prismaClient.match.findMany({ where: { schedule: { gte: new Date() } } });
+      const matches = await prismaClient.match.findMany({
+        where: { schedule: { gte: new Date() } },
+        include: { team1: true, team2: true, winner: true },
+      });
       if (matches) {
         return res.status(200).send({
           status: true,
@@ -103,7 +110,10 @@ class MatchController {
   public async getMatchById(req: Request, res: Response) {
     try {
       const matchId = req.params.matchId;
-      const match = await prismaClient.match.findFirst({ where: { id: matchId } });
+      const match = await prismaClient.match.findFirst({
+        where: { id: matchId },
+        include: { team1: true, team2: true, winner: true },
+      });
       if (!Helper.isEmpty(match)) {
         return res.status(200).send({
           status: true,
@@ -127,6 +137,7 @@ class MatchController {
       const teamId = req.params.teamId;
       const matches = await prismaClient.match.findMany({
         where: { OR: [{ team1Id: teamId }, { team2Id: teamId }], AND: { schedule: { gte: new Date() } } },
+        include: { team1: true, team2: true, winner: true },
       });
       if (matches) {
         return res.status(200).send({
@@ -151,6 +162,7 @@ class MatchController {
       const teamId = req.params.teamId;
       const matches = await prismaClient.match.findMany({
         where: { OR: [{ team1Id: teamId }, { team2Id: teamId }], AND: { schedule: { lte: new Date() } } },
+        include: { team1: true, team2: true, winner: true },
       });
       if (matches) {
         return res.status(200).send({

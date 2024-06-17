@@ -14,7 +14,6 @@ const validateMatch = (data: iMatchData) => {
   data.team2Id = !isEmpty(data.team2Id) ? data.team2Id : '';
   data.team1_score = !isEmpty(data.team1_score) ? data.team1_score : 0;
   data.team2_score = !isEmpty(data.team2_score) ? data.team2_score : 0;
-  data.winnerId = !isEmpty(data.winnerId) ? data.winnerId : '';
   data.status = !isEmpty(data.status) ? data.status : eMatchStatusType.SCHEDULED;
   data.schedule = !isEmpty(data.schedule) ? data.schedule : undefined;
 

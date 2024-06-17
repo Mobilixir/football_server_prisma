@@ -19,7 +19,7 @@ const validateRegister = (data: iRegistrationData) => {
   data.password = !isEmpty(data.password) ? data.password : '';
   data.confirm_password = !isEmpty(data.confirm_password) ? data.confirm_password : '';
 
-  if (!Validator.isLength(data.user_name, { min: 8, max: 30 })) {
+  if (!Validator.isLength(data.user_name, { min: 4, max: 30 })) {
     errors.user_name = 'User name must be between 4 to 30 chars';
   }
 

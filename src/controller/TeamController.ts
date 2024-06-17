@@ -16,7 +16,7 @@ class TeamController {
       }
 
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
 
       if (response) {
         const team = await prismaClient.team.findFirst({ where: { name: body.name } });
@@ -53,7 +53,7 @@ class TeamController {
       }
 
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
 
       if (response) {
         const team = await prismaClient.team.findFirst({ where: { id: body.id } });
@@ -126,7 +126,7 @@ class TeamController {
     try {
       const teamId = req.params.teamId;
       const user_id = (await Helper.getUserFromToken(req, res)).toString();
-      const response = await Helper.checkUserRole(user_id, res, eUserType.ADMIN);
+      const response = await Helper.checkUserRole(user_id, res, [eUserType.ADMIN]);
 
       if (response) {
         const team = await prismaClient.team.findFirst({ where: { id: teamId } });
